@@ -14,6 +14,7 @@ const STREAM_PORT = 3001
 const htmlFilePath = path.join(__dirname, 'client', 'index.html')
 
 const contentServer = express()
+contentServer.use(express.static(path.join(__dirname, 'client')))
 contentServer.get('/', (req, res) => res.sendFile(htmlFilePath))
 contentServer.listen(HTTP_PORT)
 
@@ -57,6 +58,10 @@ setTimeout(function () {
   var streamer = spawn('ffmpeg', args)
 
   streamer.on('exit', function (code) {
+    console.log('Failure', code)
+  })
+
+  streamer.on('error', function (code) {
     console.log('Failure', code)
   })
 }, 3000)

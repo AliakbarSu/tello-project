@@ -4,6 +4,7 @@ const WebSocket = require('ws')
 const spawn = require('child_process').spawn
 const express = require('express')
 const path = require('path')
+const dgram = require('dgram')
 
 const TELLO_IP = '192.168.10.1'
 const TELLO_PORT = 8889
@@ -37,6 +38,15 @@ webSocketServer.broadcast = function (data) {
     }
   })
 }
+
+const udpClient = dgram.createSocket('udp4')
+
+// These send commands could be smarter by waiting for the SDK to respond with 'ok' and handling errors
+// Send command
+udpClient.send('command', TELLO_PORT, TELLO_IP, null)
+
+// Send streamon
+udpClient.send('streamon', TELLO_PORT, TELLO_IP, null)
 
 setTimeout(function () {
   var args = [

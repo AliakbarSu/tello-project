@@ -2,7 +2,7 @@ const got = require('got')
 const eol = require('os').EOL
 const readline = require('readline')
 readline.emitKeypressEvents(process.stdin)
-process.stdin.setRawMode(true)
+// process.stdin.setRawMode(true)
 
 var dataToTrack_keys = ['battery', 'x', 'y', 'z', 'speed']
 var lastDataReceived = null
@@ -48,6 +48,14 @@ function CommandRequest() {
   })
 }
 
+function StreamOn() {
+  var message = new Buffer.from('streamon')
+
+  client.send(message, 0, message.length, PORT, HOST, (err, bytes) => {
+    if (err) throw err
+  })
+}
+
 function TakeoffRequest() {
   var message = new Buffer.from('takeoff')
 
@@ -73,6 +81,10 @@ function sendCommand(telloCommand) {
     case 'command':
       console.log('command')
       CommandRequest()
+      break
+
+    case 'streamon':
+      StreamOn()
       break
 
     case 'takeoff':
@@ -315,22 +327,22 @@ function listKeys() {
   keyMap.forEach((value, key) => {
     console.log(`${key} - ${value}`)
   })
-  console.log()
+  console.log('keuys')
 }
-process.stdin.on('keypress', (str, key) => {
-  if (key.ctrl && key.name === 'c') {
-    client.close()
-    process.exit() // eslint-disable-line no-process-exit
-  } else if (key.name === 'h') {
-    listKeys()
-  } else {
-    if (keyMap.has(str)) {
-      sendCommand(keyMap.get(str))
-    } else {
-      console.log(`No symbol defined for "${str}" key.`)
-    }
-  }
-})
+// process.stdin.on('keypress', (str, key) => {
+//   if (key.ctrl && key.name === 'c') {
+//     client.close()
+//     process.exit() // eslint-disable-line no-process-exit
+//   } else if (key.name === 'h') {
+//     listKeys()
+//   } else {
+//     if (keyMap.has(str)) {
+//       sendCommand(keyMap.get(str))
+//     } else {
+//       console.log(`No symbol defined for "${str}" key.`)
+//     }
+//   }
+// })
 
 console.log('---------------------------------------')
 console.log('Tello Command Console')
@@ -338,3 +350,7 @@ console.log('---------------------------------------')
 
 console.log('Press a key to send a command to Tello')
 listKeys()
+
+module.exports = {
+  sendCommand
+}

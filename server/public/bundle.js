@@ -99,9 +99,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ "./client/components/styles.js");
 /* harmony import */ var _Controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controls */ "./client/components/Controls.jsx");
+/* harmony import */ var _Throutle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Throutle */ "./client/components/Throutle.jsx");
 
 
 var io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/index.js");
+
 
 
 
@@ -133,7 +135,7 @@ function App(props) {
     onClick: function onClick() {
       return onCommandHandler('Left');
     }
-  }, "left"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controls__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+  }, "left"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Throutle__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controls__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -165,11 +167,36 @@ function Controls(props) {
 
 /***/ }),
 
+/***/ "./client/components/Throutle.jsx":
+/*!****************************************!*\
+  !*** ./client/components/Throutle.jsx ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ "./client/components/styles.js");
+
+
+
+function Controls(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "throutles"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButton"], null, "Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButton"], null, "Down")));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Controls);
+
+/***/ }),
+
 /***/ "./client/components/styles.js":
 /*!*************************************!*\
   !*** ./client/components/styles.js ***!
   \*************************************/
-/*! exports provided: Title, ButtonsWrapper, ButtonControls, SingleButtonWrapper */
+/*! exports provided: Title, ButtonsWrapper, ButtonControls, SingleButtonWrapper, ThroutleButtonWrapper, ThroutleButton */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -178,16 +205,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonsWrapper", function() { return ButtonsWrapper; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonControls", function() { return ButtonControls; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SingleButtonWrapper", function() { return SingleButtonWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThroutleButtonWrapper", function() { return ThroutleButtonWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThroutleButton", function() { return ThroutleButton; });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  font-size: 1.5em;\n  text-align: center;\n  color: palevioletred;\n"])));
-var ButtonsWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  width: 240px;\n  border: 1px solid red;\n"])));
+var ButtonsWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  width: 280px;\n  height: 280px;\n  padding: 12px;\n  background: #c7c7c7;\n  border-radius: 50%;\n"])));
 var ButtonControls = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  height: 80px;\n  width: 80px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 15px 25px;\n  font-size: 19px;\n  text-align: center;\n  cursor: pointer;\n  outline: none;\n  color: #fff;\n  background-color: #04aa6d;\n  border: none;\n  border-radius: 15px;\n  box-shadow: 0 9px #999;\n  &:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n  }\n"])));
 var SingleButtonWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 100%;\n  display: flex;\n  justify-content: center;\n"])));
+var ThroutleButtonWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  width: 300px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: space-between;\n  padding: 12px;\n  background: #c7c7c7;\n"])));
+var ThroutleButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  margin-top: 20px;\n  height: 80px;\n  width: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 15px 25px;\n  font-size: 19px;\n  text-align: center;\n  cursor: pointer;\n  outline: none;\n  color: #fff;\n  background-color: #04aa6d;\n  border: none;\n  border-radius: 15px;\n  box-shadow: 0 9px #999;\n  &:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n  }\n  &:first-child {\n    margin-top: 0;\n  }\n"])));
 
 /***/ }),
 

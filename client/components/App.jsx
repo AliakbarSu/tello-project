@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 const io = require('socket.io-client')
 import { Title } from './styles'
 import Controls from './Controls'
+import Throutles from './Throutle'
 
 function App(props) {
   const socket = io('ws://' + document.location.hostname + ':3000', {
@@ -22,6 +23,7 @@ function App(props) {
       <h2>Match all the tiles to win</h2>
       <button onClick={() => onCommandHandler('up')}>Up</button>
       <button onClick={() => onCommandHandler('Left')}>left</button>
+      <Throutles />
       <Controls />
     </div>
   )

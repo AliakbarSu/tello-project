@@ -13,17 +13,20 @@ function App(props) {
     console.log('connected successfully')
     console.log(socket.id) // "G5p5..."
   })
-  useEffect(() => {}, [])
 
-  const handleRightBtn = (command) => {
+  const handleOnCommand = (command) => {
+    socket.emit(command)
+  }
+
+  const handleRightBtn = () => {
     classifier.addImage('right')
   }
 
-  const handleLeftBtn = (command) => {
+  const handleLeftBtn = () => {
     classifier.addImage('left')
   }
 
-  const handleTrainBtn = (command) => {
+  const handleTrainBtn = () => {
     classifier.train(whileTraining)
   }
 
@@ -38,8 +41,8 @@ function App(props) {
       </div>
       <Title>Welcome to the Memory Gam</Title>
       <ControlPanel>
-        <Throutles />
-        <Controls />
+        <Throutles onCommand={handleOnCommand} />
+        <Controls onCommand={handleOnCommand} />
       </ControlPanel>
     </div>
   )

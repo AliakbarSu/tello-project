@@ -5,8 +5,12 @@ function Controls(props) {
   return (
     <div className="throutles">
       <ThroutleButtonWrapper>
-        <ThroutleButton>Up</ThroutleButton>
-        <ThroutleButton>Down</ThroutleButton>
+        <ThroutleButton onClick={() => props.onCommand('up')}>
+          Up
+        </ThroutleButton>
+        <ThroutleButton onClick={() => props.onCommand('down')}>
+          Down
+        </ThroutleButton>
       </ThroutleButtonWrapper>
     </div>
   )

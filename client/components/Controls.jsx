@@ -6,12 +6,20 @@ function Controls(props) {
     <div className="controls">
       <ButtonsWrapper>
         <SingleButtonWrapper>
-          <ButtonControls>Forward</ButtonControls>
+          <ButtonControls onClick={() => props.onCommand('forward')}>
+            Forward
+          </ButtonControls>
         </SingleButtonWrapper>
-        <ButtonControls>Left</ButtonControls>
-        <ButtonControls>Right</ButtonControls>
+        <ButtonControls onClick={() => props.onCommand('left')}>
+          Left
+        </ButtonControls>
+        <ButtonControls onClick={() => props.onCommand('right')}>
+          Right
+        </ButtonControls>
         <SingleButtonWrapper>
-          <ButtonControls>Back</ButtonControls>
+          <ButtonControls onClick={() => props.onCommand('back')}>
+            Back
+          </ButtonControls>
         </SingleButtonWrapper>
       </ButtonsWrapper>
     </div>

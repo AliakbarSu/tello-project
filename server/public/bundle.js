@@ -118,17 +118,20 @@ function App(props) {
     console.log('connected successfully');
     console.log(socket.id); // "G5p5..."
   });
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, []);
 
-  var handleRightBtn = function handleRightBtn(command) {
+  var handleOnCommand = function handleOnCommand(command) {
+    socket.emit(command);
+  };
+
+  var handleRightBtn = function handleRightBtn() {
     classifier.addImage('right');
   };
 
-  var handleLeftBtn = function handleLeftBtn(command) {
+  var handleLeftBtn = function handleLeftBtn() {
     classifier.addImage('left');
   };
 
-  var handleTrainBtn = function handleTrainBtn(command) {
+  var handleTrainBtn = function handleTrainBtn() {
     classifier.train(whileTraining);
   };
 
@@ -140,7 +143,11 @@ function App(props) {
     onClick: handleRightBtn
   }, "Right"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: handleTrainBtn
-  }, "Train"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["Title"], null, "Welcome to the Memory Gam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ControlPanel"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Throutle__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controls__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
+  }, "Train"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["Title"], null, "Welcome to the Memory Gam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ControlPanel"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Throutle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    onCommand: handleOnCommand
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controls__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onCommand: handleOnCommand
+  })));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -165,7 +172,23 @@ __webpack_require__.r(__webpack_exports__);
 function Controls(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "controls"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonsWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["SingleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], null, "Forward")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], null, "Left"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], null, "Right"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["SingleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], null, "Back"))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonsWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["SingleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], {
+    onClick: function onClick() {
+      return props.onCommand('forward');
+    }
+  }, "Forward")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], {
+    onClick: function onClick() {
+      return props.onCommand('left');
+    }
+  }, "Left"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], {
+    onClick: function onClick() {
+      return props.onCommand('right');
+    }
+  }, "Right"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["SingleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonControls"], {
+    onClick: function onClick() {
+      return props.onCommand('back');
+    }
+  }, "Back"))));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Controls);
@@ -190,7 +213,15 @@ __webpack_require__.r(__webpack_exports__);
 function Controls(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "throutles"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButton"], null, "Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButton"], null, "Down")));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButtonWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButton"], {
+    onClick: function onClick() {
+      return props.onCommand('up');
+    }
+  }, "Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ThroutleButton"], {
+    onClick: function onClick() {
+      return props.onCommand('down');
+    }
+  }, "Down")));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Controls);

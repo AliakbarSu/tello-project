@@ -30,6 +30,9 @@ io.on('connection', (socket) => {
   socket.on('forward', (msg) => {
     sendCommand('forward')
   })
+  socket.on('back', (msg) => {
+    sendCommand('back')
+  })
   socket.on('land', (msg) => {
     sendCommand('land')
   })

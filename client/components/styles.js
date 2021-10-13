@@ -90,3 +90,39 @@ export const ControlPanel = styled.div`
   padding: 12px;
   width: 100%;
 `
+
+export const FlightButtonsWrapper = styled.div`
+  width: 45%;
+  display: flex;
+  justify-content: space-around;
+`
+
+export const FlightButton = styled.div`
+  height: 80px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 25px;
+  font-size: 19px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #04aa6d;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  &:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+`
+
+export const DashboardWrapper = styled.div`
+  width: 100%;
+  border: 1px solid #d1d1d1;
+  padding: 12px;
+  padding-bottom: 18px;
+`

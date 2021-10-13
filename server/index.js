@@ -2,7 +2,7 @@ const app = require('./server')
 const http = require('http')
 const { Server } = require('socket.io')
 const server = http.createServer(app)
-// const { setup } = require('./tello')
+const { setup } = require('./tello')
 const { sendCommand } = require('./telloConsole')
 
 const PORT = process.env.PORT || 3000
@@ -36,6 +36,6 @@ io.on('connection', (socket) => {
 })
 
 server.listen(PORT, function () {
-  // setup()
+  setup()
   console.log('Listening on port', PORT)
 })

@@ -29,7 +29,6 @@ function App(props) {
 
   return (
     <div className="tello">
-      <VideoContainer />
       <div>
         <div>
           <button onClick={handleLeftBtn}>Left</button>

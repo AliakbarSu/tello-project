@@ -42,6 +42,7 @@
     "bootstrap": "^5.1.1",
     "express": "^4.17.1",
     "got": "^11.8.2",
+    "ml5": "^0.7.1",
     "nodeman": "^1.1.2",
     "nodemon": "^2.0.13",
     "react-bootstrap": "^2.0.0-rc.0",

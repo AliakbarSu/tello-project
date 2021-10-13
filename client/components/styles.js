@@ -82,3 +82,11 @@ export const ThroutleButton = styled.div`
     margin-top: 0;
   }
 `
+
+export const ControlPanel = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px;
+  width: 100%;
+`

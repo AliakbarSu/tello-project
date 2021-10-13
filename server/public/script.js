@@ -35,7 +35,8 @@ function videoReady() {
 }
 
 function setup() {
-  createCanvas(640, 500)
+  canvas = createCanvas(400, 400)
+  canvas.parent('canvasForHTML')
 
   video = createCapture(VIDEO)
   video.hide()
@@ -43,20 +44,20 @@ function setup() {
   mobilenet = ml5.featureExtractor('MobileNet', modelReady)
   classifier = mobilenet.classification(video, videoReady)
 
-  leftSide = createButton('It is left')
-  leftSide.mousePressed(() => {
-    classifier.addImage('left')
-  })
+  // leftSide = document.getElementById('left-btn')
+  // leftSide.mousePressed(() => {
+  //   classifier.addImage('left')
+  // })
 
-  rightSide = createButton('It is right')
-  rightSide.mousePressed(() => {
-    classifier.addImage('right')
-  })
+  // rightSide = document.getElementById('right-btn')
+  // rightSide.mousePressed(() => {
+  //   classifier.addImage('right')
+  // })
 
-  trainButton = createButton('train')
-  trainButton.mousePressed(() => {
-    classifier.train(whileTraining)
-  })
+  // trainButton = document.getElementById('train-btn')
+  // trainButton.mousePressed(() => {
+  //   classifier.train(whileTraining)
+  // })
 }
 
 function draw() {

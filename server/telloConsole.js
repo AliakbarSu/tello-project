@@ -352,5 +352,6 @@ console.log('Press a key to send a command to Tello')
 listKeys()
 
 module.exports = {
-  sendCommand
+  sendCommand,
+  client
 }

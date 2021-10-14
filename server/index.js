@@ -3,13 +3,16 @@ const http = require('http')
 const { Server } = require('socket.io')
 const server = http.createServer(app)
 const { setup } = require('./tello')
-const { sendCommand } = require('./telloConsole')
+const { sendCommand, client } = require('./telloConsole')
 
 const PORT = process.env.PORT || 3000
 
 const io = new Server(server)
 
 io.on('connection', (socket) => {
+  client.on('message', (msg, info) => {
+    socket.emit('message', msg.toString())
+  })
   console.log('a user connected')
   // Drone controlls
   socket.on('takeoff', (msg) => {
@@ -35,6 +38,15 @@ io.on('connection', (socket) => {
   })
   socket.on('land', (msg) => {
     sendCommand('land')
+  })
+  socket.on('flip', (msg) => {
+    sendCommand('flip')
+  })
+  socket.on('cw', (msg) => {
+    sendCommand('cw')
+  })
+  socket.on('battery?', (msg) => {
+    sendCommand('battery?')
   })
 })
 

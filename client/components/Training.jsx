@@ -1,4 +1,10 @@
 import React from 'react'
+import {
+  ButtonGroup,
+  ButtonGroupBtn,
+  TrainingWrapper,
+  TrainingInstruction
+} from './styles'
 import trData from '../data'
 
 class Training extends React.Component {
@@ -44,10 +50,23 @@ class Training extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>{this.state.prompt}</p>
-        <button onClick={this.startTraining}>Start Training</button>
-      </div>
+      <TrainingWrapper>
+        <TrainingInstruction>{this.state.prompt}</TrainingInstruction>
+        <ButtonGroup>
+          <ButtonGroupBtn onClick={this.startTraining}>
+            Start Training
+          </ButtonGroupBtn>
+          <ButtonGroupBtn onClick={this.props.onCommand('flip')}>
+            Flip
+          </ButtonGroupBtn>
+          <ButtonGroupBtn onClick={this.props.onCommand('cw')}>
+            360 View
+          </ButtonGroupBtn>
+          <ButtonGroupBtn onClick={this.props.onCommand('battery?')}>
+            Battery
+          </ButtonGroupBtn>
+        </ButtonGroup>
+      </TrainingWrapper>
     )
   }
 }

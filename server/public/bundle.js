@@ -122,6 +122,9 @@ function App(props) {
     console.log('connected successfully');
     console.log(socket.id); // "G5p5..."
   });
+  socket.on('message', function (msg) {
+    console.log(msg);
+  });
 
   var handleOnCommand = function handleOnCommand(command) {
     socket.emit(command);
@@ -138,6 +141,7 @@ function App(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "tello"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Training__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    onCommand: handleOnCommand,
     onAddAction: handleAddAction,
     onTrain: handleTrainBtn
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["Title"], null, "Welcome to the Memory Gam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["DashboardWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlightButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -269,7 +273,8 @@ function Controls(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data */ "./client/data.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ "./client/components/styles.js");
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../data */ "./client/data.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -311,6 +316,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var Training = /*#__PURE__*/function (_React$Component) {
   _inherits(Training, _React$Component);
 
@@ -324,9 +330,9 @@ var Training = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this);
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      trainingObjectives: _data__WEBPACK_IMPORTED_MODULE_1__["default"],
+      trainingObjectives: _data__WEBPACK_IMPORTED_MODULE_2__["default"],
       interval: null,
-      currentTrainingAction: _data__WEBPACK_IMPORTED_MODULE_1__["default"][0],
+      currentTrainingAction: _data__WEBPACK_IMPORTED_MODULE_2__["default"][0],
       prompt: 'Once ready click "Start Training" button'
     });
 
@@ -470,9 +476,15 @@ var Training = /*#__PURE__*/function (_React$Component) {
   _createClass(Training, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.prompt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["TrainingWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["TrainingInstruction"], null, this.state.prompt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroup"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
         onClick: this.startTraining
-      }, "Start Training"));
+      }, "Start Training"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
+        onClick: this.props.onCommand('flip')
+      }, "Flip"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
+        onClick: this.props.onCommand('cw')
+      }, "360 View"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
+        onClick: this.props.onCommand('battery?')
+      }, "Battery")));
     }
   }]);
 
@@ -508,7 +520,7 @@ var VideoContainer = function VideoContainer(props) {
 /*!*************************************!*\
   !*** ./client/components/styles.js ***!
   \*************************************/
-/*! exports provided: Title, ButtonsWrapper, ButtonControls, SingleButtonWrapper, ThroutleButtonWrapper, ThroutleButton, ControlPanel, FlightButtonsWrapper, FlightButton, DashboardWrapper */
+/*! exports provided: Title, ButtonsWrapper, ButtonControls, SingleButtonWrapper, ThroutleButtonWrapper, ThroutleButton, ControlPanel, FlightButtonsWrapper, FlightButton, DashboardWrapper, TrainingWrapper, TrainingInstruction, ButtonGroup, ButtonGroupBtn */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -523,8 +535,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FlightButtonsWrapper", function() { return FlightButtonsWrapper; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FlightButton", function() { return FlightButton; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardWrapper", function() { return DashboardWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TrainingWrapper", function() { return TrainingWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TrainingInstruction", function() { return TrainingInstruction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonGroup", function() { return ButtonGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonGroupBtn", function() { return ButtonGroupBtn; });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -539,6 +555,10 @@ var ControlPanel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div
 var FlightButtonsWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  width: 45%;\n  display: flex;\n  justify-content: space-around;\n"])));
 var FlightButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  height: 80px;\n  width: 200px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 15px 25px;\n  font-size: 19px;\n  text-align: center;\n  cursor: pointer;\n  outline: none;\n  color: #fff;\n  background-color: #04aa6d;\n  border: none;\n  border-radius: 15px;\n  box-shadow: 0 9px #999;\n  &:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n  }\n"])));
 var DashboardWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  width: 100%;\n  border: 1px solid #d1d1d1;\n  padding: 12px;\n  padding-bottom: 18px;\n"])));
+var TrainingWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  background: #ededed;\n  padding: 12px;\n"])));
+var TrainingInstruction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h4(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  width: 100%;\n  text-align: center;\n  padding: 12px;\n"])));
+var ButtonGroup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n  &:after {\n    content: '';\n    clear: both;\n    display: table;\n  }\n"])));
+var ButtonGroupBtn = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n  background-color: #04aa6d; /* Green background */\n  border: 1px solid green; /* Green border */\n  color: white; /* White text */\n  padding: 10px 24px; /* Some padding */\n  cursor: pointer; /* Pointer/hand icon */\n  float: left; /* Float the buttons side by side */\n  &:not(:last-child) {\n    border-right: none; /* Prevent double borders */\n  }\n  &:hover {\n    background-color: #3e8e41;\n  }\n"])));
 
 /***/ }),
 

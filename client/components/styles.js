@@ -126,3 +126,37 @@ export const DashboardWrapper = styled.div`
   padding: 12px;
   padding-bottom: 18px;
 `
+
+export const TrainingWrapper = styled.div`
+  background: #ededed;
+  padding: 12px;
+`
+
+export const TrainingInstruction = styled.h4`
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+`
+
+export const ButtonGroup = styled.div`
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+`
+
+export const ButtonGroupBtn = styled.button`
+  background-color: #04aa6d; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+  &:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+  &:hover {
+    background-color: #3e8e41;
+  }
+`

@@ -16,6 +16,10 @@ function App(props) {
     console.log(socket.id) // "G5p5..."
   })
 
+  socket.on('message', (msg) => {
+    console.log(msg)
+  })
+
   const handleOnCommand = (command) => {
     socket.emit(command)
   }
@@ -31,7 +35,11 @@ function App(props) {
   return (
     <div className="tello">
       <div>
-        <Training onAddAction={handleAddAction} onTrain={handleTrainBtn} />
+        <Training
+          onCommand={handleOnCommand}
+          onAddAction={handleAddAction}
+          onTrain={handleTrainBtn}
+        />
         <div>
           {/* <button onClick={handleLeftBtn}>Left</button>
           <button onClick={handleRightBtn}>Right</button>

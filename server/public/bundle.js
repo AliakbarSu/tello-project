@@ -102,9 +102,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Throutle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Throutle */ "./client/components/Throutle.jsx");
 /* harmony import */ var _VideoContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./VideoContainer */ "./client/components/VideoContainer.jsx");
 /* harmony import */ var _FlightButtons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FlightButtons */ "./client/components/FlightButtons.jsx");
+/* harmony import */ var _Training__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Training */ "./client/components/Training.jsx");
 
 
 var io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/index.js");
+
 
 
 
@@ -125,12 +127,8 @@ function App(props) {
     socket.emit(command);
   };
 
-  var handleRightBtn = function handleRightBtn() {
-    classifier.addImage('right');
-  };
-
-  var handleLeftBtn = function handleLeftBtn() {
-    classifier.addImage('left');
+  var handleAddAction = function handleAddAction(action) {
+    classifier.addImage(action);
   };
 
   var handleTrainBtn = function handleTrainBtn() {
@@ -139,13 +137,10 @@ function App(props) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "tello"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: handleLeftBtn
-  }, "Left"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: handleRightBtn
-  }, "Right"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: handleTrainBtn
-  }, "Train"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["Title"], null, "Welcome to the Memory Gam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["DashboardWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlightButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Training__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    onAddAction: handleAddAction,
+    onTrain: handleTrainBtn
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["Title"], null, "Welcome to the Memory Gam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["DashboardWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlightButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onCommand: handleOnCommand
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ControlPanel"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Throutle__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onCommand: handleOnCommand
@@ -263,6 +258,231 @@ function Controls(props) {
 
 /***/ }),
 
+/***/ "./client/components/Training.jsx":
+/*!****************************************!*\
+  !*** ./client/components/Training.jsx ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data */ "./client/data.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var Training = /*#__PURE__*/function (_React$Component) {
+  _inherits(Training, _React$Component);
+
+  var _super = _createSuper(Training);
+
+  function Training() {
+    var _this;
+
+    _classCallCheck(this, Training);
+
+    _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      trainingObjectives: _data__WEBPACK_IMPORTED_MODULE_1__["default"],
+      interval: null,
+      currentTrainingAction: _data__WEBPACK_IMPORTED_MODULE_1__["default"][0],
+      prompt: 'Once ready click "Start Training" button'
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "interval", null);
+
+    _defineProperty(_assertThisInitialized(_this), "trainingInterval", null);
+
+    _defineProperty(_assertThisInitialized(_this), "sleep", function (milliseconds) {
+      return new Promise(function (resolve) {
+        return setTimeout(resolve, milliseconds);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trainAction", /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(action) {
+        var _i, _arr, count;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _i = 0, _arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+              case 1:
+                if (!(_i < _arr.length)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                count = _arr[_i];
+                _context.next = 5;
+                return _this.sleep(1000);
+
+              case 5:
+                _this.props.onAddAction(action);
+
+              case 6:
+                _i++;
+                _context.next = 1;
+                break;
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
+
+    _defineProperty(_assertThisInitialized(_this), "startTraining", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var _iterator, _step, _loop;
+
+      return regeneratorRuntime.wrap(function _callee2$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _iterator = _createForOfIteratorHelper(_this.state.trainingObjectives);
+              _context3.prev = 1;
+              _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop() {
+                var item;
+                return regeneratorRuntime.wrap(function _loop$(_context2) {
+                  while (1) {
+                    switch (_context2.prev = _context2.next) {
+                      case 0:
+                        item = _step.value;
+
+                        _this.setState(function (state) {
+                          return _objectSpread(_objectSpread({}, state), {}, {
+                            currentTrainingAction: item,
+                            prompt: 'Display Sign For ' + item.action
+                          });
+                        });
+
+                        _context2.next = 4;
+                        return _this.trainAction(item.action);
+
+                      case 4:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }
+                }, _loop);
+              });
+
+              _iterator.s();
+
+            case 4:
+              if ((_step = _iterator.n()).done) {
+                _context3.next = 8;
+                break;
+              }
+
+              return _context3.delegateYield(_loop(), "t0", 6);
+
+            case 6:
+              _context3.next = 4;
+              break;
+
+            case 8:
+              _context3.next = 13;
+              break;
+
+            case 10:
+              _context3.prev = 10;
+              _context3.t1 = _context3["catch"](1);
+
+              _iterator.e(_context3.t1);
+
+            case 13:
+              _context3.prev = 13;
+
+              _iterator.f();
+
+              return _context3.finish(13);
+
+            case 16:
+              _this.setState(function (state) {
+                return {
+                  prompt: 'Training the model. hold on'
+                };
+              });
+
+              _this.props.onTrain();
+
+            case 18:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee2, null, [[1, 10, 13, 16]]);
+    })));
+
+    return _this;
+  }
+
+  _createClass(Training, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.prompt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.startTraining
+      }, "Start Training"));
+    }
+  }]);
+
+  return Training;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Training);
+
+/***/ }),
+
 /***/ "./client/components/VideoContainer.jsx":
 /*!**********************************************!*\
   !*** ./client/components/VideoContainer.jsx ***!
@@ -319,6 +539,40 @@ var ControlPanel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div
 var FlightButtonsWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  width: 45%;\n  display: flex;\n  justify-content: space-around;\n"])));
 var FlightButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  height: 80px;\n  width: 200px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 15px 25px;\n  font-size: 19px;\n  text-align: center;\n  cursor: pointer;\n  outline: none;\n  color: #fff;\n  background-color: #04aa6d;\n  border: none;\n  border-radius: 15px;\n  box-shadow: 0 9px #999;\n  &:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n  }\n"])));
 var DashboardWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  width: 100%;\n  border: 1px solid #d1d1d1;\n  padding: 12px;\n  padding-bottom: 18px;\n"])));
+
+/***/ }),
+
+/***/ "./client/data.js":
+/*!************************!*\
+  !*** ./client/data.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  text: 'Left',
+  action: 'Going Left'
+}, {
+  text: 'Right',
+  action: 'Going Right'
+}, {
+  text: 'Up',
+  action: 'Going Up'
+}, {
+  text: 'Down',
+  action: 'Going Down'
+}, {
+  text: 'Take Off',
+  action: 'Taking Off'
+}, {
+  text: 'Land',
+  action: 'Landing'
+}, {
+  text: 'Flip',
+  action: 'Flipping'
+}]);
 
 /***/ }),
 

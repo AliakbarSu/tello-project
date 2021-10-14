@@ -5,6 +5,7 @@ import Controls from './Controls'
 import Throutles from './Throutle'
 import VideoContainer from './VideoContainer'
 import FlightButtons from './FlightButtons'
+import Training from './Training'
 
 function App(props) {
   const socket = io('ws://' + document.location.hostname + ':3000', {
@@ -19,12 +20,8 @@ function App(props) {
     socket.emit(command)
   }
 
-  const handleRightBtn = () => {
-    classifier.addImage('right')
-  }
-
-  const handleLeftBtn = () => {
-    classifier.addImage('left')
+  const handleAddAction = (action) => {
+    classifier.addImage(action)
   }
 
   const handleTrainBtn = () => {
@@ -34,10 +31,11 @@ function App(props) {
   return (
     <div className="tello">
       <div>
+        <Training onAddAction={handleAddAction} onTrain={handleTrainBtn} />
         <div>
-          <button onClick={handleLeftBtn}>Left</button>
+          {/* <button onClick={handleLeftBtn}>Left</button>
           <button onClick={handleRightBtn}>Right</button>
-          <button onClick={handleTrainBtn}>Train</button>
+          <button onClick={handleTrainBtn}>Train</button> */}
         </div>
       </div>
       <Title>Welcome to the Memory Gam</Title>

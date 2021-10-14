@@ -3,7 +3,11 @@ import {
   ButtonGroup,
   ButtonGroupBtn,
   TrainingWrapper,
-  TrainingInstruction
+  TrainingInstruction,
+  StatusWrapper,
+  StatusItem,
+  StatusText,
+  StatusTitle
 } from './styles'
 import trData from '../data'
 
@@ -33,6 +37,11 @@ class Training extends React.Component {
     }
   }
 
+  isNumeric = (str) => {
+    if (typeof str != 'string') return false
+    return !isNaN(str)
+  }
+
   startTraining = async () => {
     for (const item of this.state.trainingObjectives) {
       this.setState((state) => ({
@@ -56,16 +65,32 @@ class Training extends React.Component {
           <ButtonGroupBtn onClick={this.startTraining}>
             Start Training
           </ButtonGroupBtn>
-          <ButtonGroupBtn onClick={this.props.onCommand('flip')}>
+          <ButtonGroupBtn onClick={() => this.props.onCommand('flip')}>
             Flip
           </ButtonGroupBtn>
-          <ButtonGroupBtn onClick={this.props.onCommand('cw')}>
+          <ButtonGroupBtn onClick={() => this.props.onCommand('cw')}>
             360 View
           </ButtonGroupBtn>
-          <ButtonGroupBtn onClick={this.props.onCommand('battery?')}>
+          <ButtonGroupBtn onClick={() => this.props.onCommand('battery?')}>
             Battery
           </ButtonGroupBtn>
         </ButtonGroup>
+        <StatusWrapper>
+          <StatusItem>
+            <StatusTitle>Flying Status: </StatusTitle>
+            <StatusText ok={this.props.status == 'ok'}>
+              {this.props.status.toUpperCase()}
+            </StatusText>
+          </StatusItem>
+          <StatusItem>
+            <StatusTitle>Battery: </StatusTitle>
+            <StatusText
+              ok={this.props.battery ? this.props.battery > 50 : false}
+            >
+              {this.props.battery + '%'}
+            </StatusText>
+          </StatusItem>
+        </StatusWrapper>
       </TrainingWrapper>
     )
   }

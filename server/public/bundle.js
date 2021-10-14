@@ -103,6 +103,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _VideoContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./VideoContainer */ "./client/components/VideoContainer.jsx");
 /* harmony import */ var _FlightButtons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FlightButtons */ "./client/components/FlightButtons.jsx");
 /* harmony import */ var _Training__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Training */ "./client/components/Training.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 var io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/index.js");
@@ -113,22 +125,55 @@ var io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-c
 
 
 
+var socket = io('ws://' + document.location.hostname + ':3000', {
+  reconnectionDelayMax: 10000
+});
 
 function App(props) {
-  var socket = io('ws://' + document.location.hostname + ':3000', {
-    reconnectionDelayMax: 10000
-  });
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('ok'),
+      _useState2 = _slicedToArray(_useState, 2),
+      status = _useState2[0],
+      setStatus = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(100),
+      _useState4 = _slicedToArray(_useState3, 2),
+      battery = _useState4[0],
+      setBattery = _useState4[1];
+
+  var interval = null;
+
+  var handleOnCommand = function handleOnCommand(command) {
+    socket.emit(command);
+  };
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (interval) {
+      clearInterval(interval);
+    }
+
+    interval = setInterval(function () {
+      handleOnCommand('battery?');
+    }, 10000);
+  }, []);
+
+  var isNumeric = function isNumeric(str) {
+    if (typeof str != 'string') return false;
+    return !isNaN(str);
+  };
+
   socket.on('connect', function () {
     console.log('connected successfully');
     console.log(socket.id); // "G5p5..."
   });
   socket.on('message', function (msg) {
     console.log(msg);
-  });
 
-  var handleOnCommand = function handleOnCommand(command) {
-    socket.emit(command);
-  };
+    if (isNumeric(msg)) {
+      setBattery(parseInt(msg));
+    } else {
+      setStatus(msg);
+    }
+  });
 
   var handleAddAction = function handleAddAction(action) {
     classifier.addImage(action);
@@ -141,6 +186,8 @@ function App(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "tello"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Training__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    battery: battery,
+    status: status,
     onCommand: handleOnCommand,
     onAddAction: handleAddAction,
     onTrain: handleTrainBtn
@@ -387,6 +434,11 @@ var Training = /*#__PURE__*/function (_React$Component) {
       };
     }());
 
+    _defineProperty(_assertThisInitialized(_this), "isNumeric", function (str) {
+      if (typeof str != 'string') return false;
+      return !isNaN(str);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "startTraining", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
       var _iterator, _step, _loop;
 
@@ -476,15 +528,27 @@ var Training = /*#__PURE__*/function (_React$Component) {
   _createClass(Training, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["TrainingWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["TrainingInstruction"], null, this.state.prompt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroup"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
         onClick: this.startTraining
       }, "Start Training"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
-        onClick: this.props.onCommand('flip')
+        onClick: function onClick() {
+          return _this2.props.onCommand('flip');
+        }
       }, "Flip"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
-        onClick: this.props.onCommand('cw')
+        onClick: function onClick() {
+          return _this2.props.onCommand('cw');
+        }
       }, "360 View"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
-        onClick: this.props.onCommand('battery?')
-      }, "Battery")));
+        onClick: function onClick() {
+          return _this2.props.onCommand('battery?');
+        }
+      }, "Battery")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusTitle"], null, "Flying Status: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusText"], {
+        ok: this.props.status == 'ok'
+      }, this.props.status.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusTitle"], null, "Battery: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusText"], {
+        ok: this.props.battery ? this.props.battery > 50 : false
+      }, this.props.battery + '%'))));
     }
   }]);
 
@@ -520,7 +584,7 @@ var VideoContainer = function VideoContainer(props) {
 /*!*************************************!*\
   !*** ./client/components/styles.js ***!
   \*************************************/
-/*! exports provided: Title, ButtonsWrapper, ButtonControls, SingleButtonWrapper, ThroutleButtonWrapper, ThroutleButton, ControlPanel, FlightButtonsWrapper, FlightButton, DashboardWrapper, TrainingWrapper, TrainingInstruction, ButtonGroup, ButtonGroupBtn */
+/*! exports provided: Title, ButtonsWrapper, ButtonControls, SingleButtonWrapper, ThroutleButtonWrapper, ThroutleButton, ControlPanel, FlightButtonsWrapper, FlightButton, DashboardWrapper, TrainingWrapper, TrainingInstruction, ButtonGroup, ButtonGroupBtn, StatusWrapper, StatusItem, StatusTitle, StatusText */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -539,8 +603,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TrainingInstruction", function() { return TrainingInstruction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonGroup", function() { return ButtonGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonGroupBtn", function() { return ButtonGroupBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StatusWrapper", function() { return StatusWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StatusItem", function() { return StatusItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StatusTitle", function() { return StatusTitle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StatusText", function() { return StatusText; });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -555,10 +623,16 @@ var ControlPanel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div
 var FlightButtonsWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  width: 45%;\n  display: flex;\n  justify-content: space-around;\n"])));
 var FlightButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  height: 80px;\n  width: 200px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 15px 25px;\n  font-size: 19px;\n  text-align: center;\n  cursor: pointer;\n  outline: none;\n  color: #fff;\n  background-color: #04aa6d;\n  border: none;\n  border-radius: 15px;\n  box-shadow: 0 9px #999;\n  &:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n  }\n"])));
 var DashboardWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  width: 100%;\n  border: 1px solid #d1d1d1;\n  padding: 12px;\n  padding-bottom: 18px;\n"])));
-var TrainingWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  background: #ededed;\n  padding: 12px;\n"])));
+var TrainingWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  background: #ededed;\n  padding: 12px;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n"])));
 var TrainingInstruction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h4(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  width: 100%;\n  text-align: center;\n  padding: 12px;\n"])));
 var ButtonGroup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n  &:after {\n    content: '';\n    clear: both;\n    display: table;\n  }\n"])));
 var ButtonGroupBtn = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n  background-color: #04aa6d; /* Green background */\n  border: 1px solid green; /* Green border */\n  color: white; /* White text */\n  padding: 10px 24px; /* Some padding */\n  cursor: pointer; /* Pointer/hand icon */\n  float: left; /* Float the buttons side by side */\n  &:not(:last-child) {\n    border-right: none; /* Prevent double borders */\n  }\n  &:hover {\n    background-color: #3e8e41;\n  }\n"])));
+var StatusWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n  width: 50%;\n  display: flex;\n  justify-content: space-around;\n"])));
+var StatusItem = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: space-between;\n"])));
+var StatusTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n  font-weight: bold;\n"])));
+var StatusText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n  text-align: center;\n  padding: 0 12px;\n  color: ", ";\n"])), function (props) {
+  return props.ok ? 'green' : 'red';
+});
 
 /***/ }),
 

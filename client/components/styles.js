@@ -130,6 +130,9 @@ export const DashboardWrapper = styled.div`
 export const TrainingWrapper = styled.div`
   background: #ededed;
   padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 `
 
 export const TrainingInstruction = styled.h4`
@@ -159,4 +162,25 @@ export const ButtonGroupBtn = styled.button`
   &:hover {
     background-color: #3e8e41;
   }
+`
+
+export const StatusWrapper = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+`
+
+export const StatusItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+export const StatusTitle = styled.p`
+  font-weight: bold;
+`
+
+export const StatusText = styled.p`
+  text-align: center;
+  padding: 0 12px;
+  color: ${(props) => (props.ok ? 'green' : 'red')};
 `

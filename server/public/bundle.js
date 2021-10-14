@@ -130,7 +130,7 @@ var socket = io('ws://' + document.location.hostname + ':3000', {
 });
 
 function App(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('ok'),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('No Connection'),
       _useState2 = _slicedToArray(_useState, 2),
       status = _useState2[0],
       setStatus = _useState2[1];
@@ -185,13 +185,13 @@ function App(props) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "tello"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Training__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Training__WEBPACK_IMPORTED_MODULE_6__["default"], {
     battery: battery,
     status: status,
     onCommand: handleOnCommand,
     onAddAction: handleAddAction,
     onTrain: handleTrainBtn
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["Title"], null, "Welcome to the Memory Gam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["DashboardWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlightButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["DashboardWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlightButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onCommand: handleOnCommand
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ControlPanel"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Throutle__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onCommand: handleOnCommand

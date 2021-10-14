@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 const io = require('socket.io-client')
-import { Title, ControlPanel, DashboardWrapper } from './styles'
+import { ControlPanel, DashboardWrapper } from './styles'
 import Controls from './Controls'
 import Throutles from './Throutle'
 import VideoContainer from './VideoContainer'
@@ -11,7 +11,7 @@ let socket = io('ws://' + document.location.hostname + ':3000', {
 })
 
 function App(props) {
-  const [status, setStatus] = useState('ok')
+  const [status, setStatus] = useState('No Connection')
   const [battery, setBattery] = useState(100)
   let interval = null
 
@@ -57,21 +57,13 @@ function App(props) {
 
   return (
     <div className="tello">
-      <div>
-        <Training
-          battery={battery}
-          status={status}
-          onCommand={handleOnCommand}
-          onAddAction={handleAddAction}
-          onTrain={handleTrainBtn}
-        />
-        <div>
-          {/* <button onClick={handleLeftBtn}>Left</button>
-          <button onClick={handleRightBtn}>Right</button>
-          <button onClick={handleTrainBtn}>Train</button> */}
-        </div>
-      </div>
-      <Title>Welcome to the Memory Gam</Title>
+      <Training
+        battery={battery}
+        status={status}
+        onCommand={handleOnCommand}
+        onAddAction={handleAddAction}
+        onTrain={handleTrainBtn}
+      />
       <DashboardWrapper>
         <FlightButtons onCommand={handleOnCommand} />
       </DashboardWrapper>

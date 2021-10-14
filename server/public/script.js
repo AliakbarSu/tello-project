@@ -43,21 +43,6 @@ function setup() {
   background(0)
   mobilenet = ml5.featureExtractor('MobileNet', modelReady)
   classifier = mobilenet.classification(video, videoReady)
-
-  // leftSide = document.getElementById('left-btn')
-  // leftSide.mousePressed(() => {
-  //   classifier.addImage('left')
-  // })
-
-  // rightSide = document.getElementById('right-btn')
-  // rightSide.mousePressed(() => {
-  //   classifier.addImage('right')
-  // })
-
-  // trainButton = document.getElementById('train-btn')
-  // trainButton.mousePressed(() => {
-  //   classifier.train(whileTraining)
-  // })
 }
 
 function draw() {

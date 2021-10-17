@@ -56,6 +56,14 @@ function App(props) {
     classifier.train(whileTraining)
   }
 
+  const handleLoadModel = () => {
+    classifier.load('model.json', customModelReady)
+  }
+
+  const handleSaveModel = () => {
+    classifier.save()
+  }
+
   return (
     <div className="tello">
       <Training
@@ -64,6 +72,8 @@ function App(props) {
         onCommand={handleOnCommand}
         onAddAction={handleAddAction}
         onTrain={handleTrainBtn}
+        onLoadModel={handleLoadModel}
+        onSaveModel={handleSaveModel}
       />
       <DashboardWrapper>
         <FlightButtons onCommand={handleOnCommand} />

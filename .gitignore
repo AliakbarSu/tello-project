@@ -8,6 +8,8 @@ npm-debug.*
 *.orig.*
 web-build/
 bin/
+server/public/model.json
+server/public/model.weights*
 
 # macOS
 .DS_Store

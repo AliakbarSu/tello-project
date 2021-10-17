@@ -184,6 +184,14 @@ function App(props) {
     classifier.train(whileTraining);
   };
 
+  var handleLoadModel = function handleLoadModel() {
+    classifier.load('model.json', customModelReady);
+  };
+
+  var handleSaveModel = function handleSaveModel() {
+    classifier.save();
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "tello"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Training__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -191,7 +199,9 @@ function App(props) {
     status: status,
     onCommand: handleOnCommand,
     onAddAction: handleAddAction,
-    onTrain: handleTrainBtn
+    onTrain: handleTrainBtn,
+    onLoadModel: handleLoadModel,
+    onSaveModel: handleSaveModel
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["DashboardWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlightButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onCommand: handleOnCommand
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ControlPanel"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Throutle__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -545,7 +555,15 @@ var Training = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this2.props.onCommand('battery?');
         }
-      }, "Battery")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusTitle"], null, "Flying Status: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusText"], {
+      }, "Battery"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
+        onClick: function onClick() {
+          return _this2.props.onSaveModel();
+        }
+      }, "Save Model"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["ButtonGroupBtn"], {
+        onClick: function onClick() {
+          return _this2.props.onLoadModel();
+        }
+      }, "Load Model")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusWrapper"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusTitle"], null, "Flying Status: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusText"], {
         ok: this.props.status == 'ok'
       }, this.props.status.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusTitle"], null, "Battery: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__["StatusText"], {
         ok: this.props.battery ? this.props.battery > 50 : false
@@ -647,6 +665,9 @@ var StatusText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_te
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([{
+  text: 'IDLE',
+  action: 'IDLE'
+}, {
   text: 'Left',
   action: 'Going Left'
 }, {

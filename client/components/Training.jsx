@@ -74,6 +74,12 @@ class Training extends React.Component {
           <ButtonGroupBtn onClick={() => this.props.onCommand('battery?')}>
             Battery
           </ButtonGroupBtn>
+          <ButtonGroupBtn onClick={() => this.props.onSaveModel()}>
+            Save Model
+          </ButtonGroupBtn>
+          <ButtonGroupBtn onClick={() => this.props.onLoadModel()}>
+            Load Model
+          </ButtonGroupBtn>
         </ButtonGroup>
         <StatusWrapper>
           <StatusItem>

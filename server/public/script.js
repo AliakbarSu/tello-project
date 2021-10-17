@@ -41,6 +41,10 @@ function modelReady() {
   console.log('model is ready!!')
 }
 
+function customModelReady() {
+  classifier.classify(gotResults)
+}
+
 function videoReady() {
   console.log('video is ready!!')
 }

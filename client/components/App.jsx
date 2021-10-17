@@ -7,6 +7,7 @@ import VideoContainer from './VideoContainer'
 import FlightButtons from './FlightButtons'
 import Training from './Training'
 import Sketch from 'react-p5'
+import { debounce_leading } from '../utils/debounce'
 
 let mobilenet
 let classifier
@@ -88,6 +89,9 @@ function App(props) {
     } else {
       // console.log(result)
       label = result[0].label
+      if (label !== 'idle') {
+        debounce_leading(() => handleOnCommand(label), 500)
+      }
       classifier.classify(gotResults)
     }
   }

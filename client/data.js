@@ -1,34 +1,34 @@
 export default [
   {
     text: 'IDLE',
-    action: 'IDLE'
+    action: 'idle'
   },
   {
     text: 'Left',
-    action: 'Going Left'
+    action: 'left'
   },
   {
     text: 'Right',
-    action: 'Going Right'
+    action: 'right'
   },
   {
     text: 'Up',
-    action: 'Going Up'
+    action: 'up'
   },
   {
     text: 'Down',
-    action: 'Going Down'
+    action: 'down'
   },
   {
     text: 'Take Off',
-    action: 'Taking Off'
+    action: 'takeoff'
   },
   {
     text: 'Land',
-    action: 'Landing'
+    action: 'land'
   },
   {
     text: 'Flip',
-    action: 'Flipping'
+    action: 'flip'
   }
 ]

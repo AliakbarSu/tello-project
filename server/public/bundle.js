@@ -105,6 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Training__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Training */ "./client/components/Training.jsx");
 /* harmony import */ var react_p5__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-p5 */ "./node_modules/react-p5/build/index.js");
 /* harmony import */ var react_p5__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_p5__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/debounce */ "./client/utils/debounce.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -120,6 +121,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/index.js");
+
 
 
 
@@ -216,6 +218,13 @@ function App(props) {
     } else {
       // console.log(result)
       label = result[0].label;
+
+      if (label !== 'idle') {
+        Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_8__["debounce_leading"])(function () {
+          return handleOnCommand(label);
+        }, 500);
+      }
+
       classifier.classify(gotResults);
     }
   }
@@ -759,28 +768,28 @@ var StatusText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_te
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([{
   text: 'IDLE',
-  action: 'IDLE'
+  action: 'idle'
 }, {
   text: 'Left',
-  action: 'Going Left'
+  action: 'left'
 }, {
   text: 'Right',
-  action: 'Going Right'
+  action: 'right'
 }, {
   text: 'Up',
-  action: 'Going Up'
+  action: 'up'
 }, {
   text: 'Down',
-  action: 'Going Down'
+  action: 'down'
 }, {
   text: 'Take Off',
-  action: 'Taking Off'
+  action: 'takeoff'
 }, {
   text: 'Land',
-  action: 'Landing'
+  action: 'land'
 }, {
   text: 'Flip',
-  action: 'Flipping'
+  action: 'flip'
 }]);
 
 /***/ }),
@@ -805,6 +814,39 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', function () {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('app'));
 });
+
+/***/ }),
+
+/***/ "./client/utils/debounce.js":
+/*!**********************************!*\
+  !*** ./client/utils/debounce.js ***!
+  \**********************************/
+/*! exports provided: debounce_leading */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "debounce_leading", function() { return debounce_leading; });
+function debounce_leading(func) {
+  var _this = this;
+
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
+  var timer;
+  return function () {
+    if (!timer) {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      func.apply(_this, args);
+    }
+
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      timer = undefined;
+    }, timeout);
+  };
+}
 
 /***/ }),
 

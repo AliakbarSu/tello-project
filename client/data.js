@@ -1,5 +1,9 @@
 export default [
   {
+    text: 'IDLE',
+    action: 'IDLE'
+  },
+  {
     text: 'Left',
     action: 'Going Left'
   },

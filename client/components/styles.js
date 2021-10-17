@@ -13,7 +13,7 @@ export const ButtonsWrapper = styled.div`
   width: 280px;
   height: 280px;
   padding: 12px;
-  background: #c7c7c7;
+  background: #d5d5d5;
   border-radius: 50%;
 `
 
@@ -29,10 +29,10 @@ export const ButtonControls = styled.div`
   cursor: pointer;
   outline: none;
   color: #fff;
-  background-color: #04aa6d;
+  background-color: black;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 9px #5e9f23;
   &:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
@@ -53,7 +53,8 @@ export const ThroutleButtonWrapper = styled.div`
   justify-content: center;
   align-items: space-between;
   padding: 12px;
-  background: #c7c7c7;
+  background: #d5d5d5;
+  border-radius: 5px;
 `
 
 export const ThroutleButton = styled.div`
@@ -69,10 +70,10 @@ export const ThroutleButton = styled.div`
   cursor: pointer;
   outline: none;
   color: #fff;
-  background-color: #04aa6d;
+  background-color: black;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 9px #5e9f23;
   &:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
@@ -109,10 +110,10 @@ export const FlightButton = styled.div`
   cursor: pointer;
   outline: none;
   color: #fff;
-  background-color: #04aa6d;
+  background-color: black;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 9px #5e9f23;
   &:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
@@ -150,8 +151,8 @@ export const ButtonGroup = styled.div`
 `
 
 export const ButtonGroupBtn = styled.button`
-  background-color: #04aa6d; /* Green background */
-  border: 1px solid green; /* Green border */
+  background-color: black; /* Green background */
+  border: 1px solid white; /* Green border */
   color: white; /* White text */
   padding: 10px 24px; /* Some padding */
   cursor: pointer; /* Pointer/hand icon */

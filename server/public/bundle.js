@@ -176,6 +176,7 @@ function App(props) {
   });
 
   var handleAddAction = function handleAddAction(action) {
+    console.log(action);
     classifier.addImage(action);
   };
 

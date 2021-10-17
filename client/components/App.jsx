@@ -48,6 +48,7 @@ function App(props) {
   })
 
   const handleAddAction = (action) => {
+    console.log(action)
     classifier.addImage(action)
   }
 

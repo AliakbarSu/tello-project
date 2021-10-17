@@ -20,7 +20,7 @@ function gotResults(error, result) {
   if (error) {
     console.log('Error thrown', error)
   } else {
-    //console.log(result)
+    // console.log(result)
     label = result[0].label
     classifier.classify(gotResults)
   }
@@ -41,12 +41,12 @@ function setup() {
   video = createCapture(VIDEO)
   video.hide()
   background(0)
-  mobilenet = ml5.featureExtractor('MobileNet', modelReady)
+  mobilenet = ml5.featureExtractor('MobileNet', { numLabels: 7 }, modelReady)
   classifier = mobilenet.classification(video, videoReady)
 }
 
 function draw() {
-  image(video, 0, 0)
+  image(video, -120, 0)
   fill(0)
   textSize(64)
   text(label, 10, height - 100)

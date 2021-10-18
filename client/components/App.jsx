@@ -8,6 +8,7 @@ import FlightButtons from './FlightButtons'
 import Training from './Training'
 import Sketch from 'react-p5'
 import { debounce_leading } from '../utils/debounce'
+import commands from '../data'
 
 let mobilenet
 let classifier
@@ -26,6 +27,7 @@ function App(props) {
   let interval = null
 
   const handleOnCommand = (command) => {
+    console.log(command)
     socket.emit(command)
   }
 
@@ -90,7 +92,7 @@ function App(props) {
       // console.log(result)
       label = result[0].label
       if (label !== 'idle') {
-        debounce_leading(() => handleOnCommand(label), 500)
+        debounce_leading(() => handleOnCommand(label), 500)()
       }
       classifier.classify(gotResults)
     }
@@ -128,7 +130,11 @@ function App(props) {
     video = p5.createCapture(p5.VIDEO)
     video.hide()
     p5.background(0)
-    mobilenet = ml5.featureExtractor('MobileNet', { numLabels: 7 }, modelReady)
+    mobilenet = ml5.featureExtractor(
+      'MobileNet',
+      { numLabels: commands.length },
+      modelReady
+    )
     classifier = mobilenet.classification(video, videoReady)
 
     // Detect image

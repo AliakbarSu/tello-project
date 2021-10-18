@@ -106,6 +106,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_p5__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-p5 */ "./node_modules/react-p5/build/index.js");
 /* harmony import */ var react_p5__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_p5__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/debounce */ "./client/utils/debounce.js");
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../data */ "./client/data.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -121,6 +122,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/index.js");
+
 
 
 
@@ -154,6 +156,7 @@ function App(props) {
   var interval = null;
 
   var handleOnCommand = function handleOnCommand(command) {
+    console.log(command);
     socket.emit(command);
   };
 
@@ -222,7 +225,7 @@ function App(props) {
       if (label !== 'idle') {
         Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_8__["debounce_leading"])(function () {
           return handleOnCommand(label);
-        }, 500);
+        }, 500)();
       }
 
       classifier.classify(gotResults);
@@ -264,7 +267,7 @@ function App(props) {
     video.hide();
     p5.background(0);
     mobilenet = ml5.featureExtractor('MobileNet', {
-      numLabels: 7
+      numLabels: _data__WEBPACK_IMPORTED_MODULE_9__["default"].length
     }, modelReady);
     classifier = mobilenet.classification(video, videoReady); // Detect image
 
@@ -508,38 +511,57 @@ var Training = /*#__PURE__*/function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "trainAction", /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(action) {
-        var _i, _arr, count;
+        var _iterator, _step, count;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _i = 0, _arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                _iterator = _createForOfIteratorHelper(Array(15));
+                _context.prev = 1;
 
-              case 1:
-                if (!(_i < _arr.length)) {
-                  _context.next = 9;
+                _iterator.s();
+
+              case 3:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 10;
                   break;
                 }
 
-                count = _arr[_i];
-                _context.next = 5;
+                count = _step.value;
+                _context.next = 7;
                 return _this.sleep(1000);
 
-              case 5:
+              case 7:
                 _this.props.onAddAction(action);
 
-              case 6:
-                _i++;
-                _context.next = 1;
+              case 8:
+                _context.next = 3;
                 break;
 
-              case 9:
+              case 10:
+                _context.next = 15;
+                break;
+
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](1);
+
+                _iterator.e(_context.t0);
+
+              case 15:
+                _context.prev = 15;
+
+                _iterator.f();
+
+                return _context.finish(15);
+
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[1, 12, 15, 18]]);
       }));
 
       return function (_x) {
@@ -553,13 +575,13 @@ var Training = /*#__PURE__*/function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "startTraining", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      var _iterator, _step, _loop;
+      var _iterator2, _step2, _loop;
 
       return regeneratorRuntime.wrap(function _callee2$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              _iterator = _createForOfIteratorHelper(_this.state.trainingObjectives);
+              _iterator2 = _createForOfIteratorHelper(_this.state.trainingObjectives);
               _context3.prev = 1;
               _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop() {
                 var item;
@@ -567,7 +589,7 @@ var Training = /*#__PURE__*/function (_React$Component) {
                   while (1) {
                     switch (_context2.prev = _context2.next) {
                       case 0:
-                        item = _step.value;
+                        item = _step2.value;
 
                         _this.setState(function (state) {
                           return _objectSpread(_objectSpread({}, state), {}, {
@@ -587,10 +609,10 @@ var Training = /*#__PURE__*/function (_React$Component) {
                 }, _loop);
               });
 
-              _iterator.s();
+              _iterator2.s();
 
             case 4:
-              if ((_step = _iterator.n()).done) {
+              if ((_step2 = _iterator2.n()).done) {
                 _context3.next = 8;
                 break;
               }
@@ -609,12 +631,12 @@ var Training = /*#__PURE__*/function (_React$Component) {
               _context3.prev = 10;
               _context3.t1 = _context3["catch"](1);
 
-              _iterator.e(_context3.t1);
+              _iterator2.e(_context3.t1);
 
             case 13:
               _context3.prev = 13;
 
-              _iterator.f();
+              _iterator2.f();
 
               return _context3.finish(13);
 
@@ -787,10 +809,11 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   text: 'Land',
   action: 'land'
-}, {
-  text: 'Flip',
-  action: 'flip'
-}]);
+} // {
+//   text: 'Flip',
+//   action: 'flip'
+// }
+]);
 
 /***/ }),
 

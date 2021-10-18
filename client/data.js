@@ -26,9 +26,9 @@ export default [
   {
     text: 'Land',
     action: 'land'
-  },
-  {
-    text: 'Flip',
-    action: 'flip'
   }
+  // {
+  //   text: 'Flip',
+  //   action: 'flip'
+  // }
 ]

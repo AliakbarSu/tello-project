@@ -25,6 +25,7 @@ function App(props) {
   const [status, setStatus] = useState('No Connection')
   const [battery, setBattery] = useState(100)
   let interval = null
+  let prevCommand = ''
 
   const handleOnCommand = (command) => {
     console.log(command)
@@ -92,7 +93,12 @@ function App(props) {
       // console.log(result)
       label = result[0].label
       if (label !== 'idle') {
-        debounce_leading(() => handleOnCommand(label), 500)()
+        debounce_leading(() => {
+          if (prevCommand !== label) {
+            handleOnCommand(label)
+          }
+          prevCommand = label
+        }, 300)()
       }
       classifier.classify(gotResults)
     }

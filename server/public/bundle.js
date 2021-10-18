@@ -154,6 +154,7 @@ function App(props) {
       setBattery = _useState4[1];
 
   var interval = null;
+  var prevCommand = '';
 
   var handleOnCommand = function handleOnCommand(command) {
     console.log(command);
@@ -224,8 +225,12 @@ function App(props) {
 
       if (label !== 'idle') {
         Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_8__["debounce_leading"])(function () {
-          return handleOnCommand(label);
-        }, 500)();
+          if (prevCommand !== label) {
+            handleOnCommand(label);
+          }
+
+          prevCommand = label;
+        }, 300)();
       }
 
       classifier.classify(gotResults);

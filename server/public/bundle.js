@@ -136,8 +136,10 @@ var mobilenet;
 var classifier;
 var video;
 var label = '';
-var detector;
+var detector = null;
 var results = [];
+var prevStatus = null;
+var interval = null;
 var socket = io('ws://' + document.location.hostname + ':3000', {
   reconnectionDelayMax: 10000
 });
@@ -153,22 +155,20 @@ function App(props) {
       battery = _useState4[0],
       setBattery = _useState4[1];
 
-  var interval = null;
   var prevCommand = '';
 
   var handleOnCommand = function handleOnCommand(command) {
-    console.log(command);
+    console.log('Send: ' + command);
     socket.emit(command);
+    prevStatus = null;
   };
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (interval) {
-      clearInterval(interval);
-    }
-
-    interval = setInterval(function () {
-      handleOnCommand('battery?');
-    }, 10000);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {// if (interval) {
+    //   clearInterval(interval)
+    // }
+    // interval = setInterval(() => {
+    //   handleOnCommand('battery?')
+    // }, 3000)
   }, []);
 
   var isNumeric = function isNumeric(str) {
@@ -181,7 +181,8 @@ function App(props) {
     console.log(socket.id); // "G5p5..."
   });
   socket.on('message', function (msg) {
-    console.log(msg);
+    console.log('Received: ' + msg);
+    prevStatus = msg;
 
     if (isNumeric(msg)) {
       setBattery(parseInt(msg));
@@ -224,13 +225,20 @@ function App(props) {
       label = result[0].label;
 
       if (label !== 'idle') {
-        Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_8__["debounce_leading"])(function () {
-          if (prevCommand !== label) {
-            handleOnCommand(label);
-          }
+        // debounce_leading(() => {
+        if (prevCommand !== label) {
+          // if (prevStatus == 'ok' || isNumeric(prevStatus)) {
+          handleOnCommand(label); // } else {
+          //   if (interval) {
+          //     clearTimeout(interval)
+          //   }
+          //   interval = setTimeout(() => {
+          //     handleOnCommand('battery?')
+          //   }, 3000)
+          // }
+        }
 
-          prevCommand = label;
-        }, 300)();
+        prevCommand = label; // }, 300)()
       }
 
       classifier.classify(gotResults);
@@ -522,7 +530,7 @@ var Training = /*#__PURE__*/function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _iterator = _createForOfIteratorHelper(Array(15));
+                _iterator = _createForOfIteratorHelper(Array(20));
                 _context.prev = 1;
 
                 _iterator.s();
@@ -805,10 +813,11 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   text: 'Up',
   action: 'up'
-}, {
-  text: 'Down',
-  action: 'down'
-}, {
+}, // {
+//   text: 'Down',
+//   action: 'down'
+// },
+{
   text: 'Take Off',
   action: 'takeoff'
 }, {

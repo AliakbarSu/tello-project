@@ -14,8 +14,10 @@ let mobilenet
 let classifier
 let video
 let label = ''
-let detector
+let detector = null
 let results = []
+let prevStatus = null
+let interval = null
 
 let socket = io('ws://' + document.location.hostname + ':3000', {
   reconnectionDelayMax: 10000
@@ -24,21 +26,21 @@ let socket = io('ws://' + document.location.hostname + ':3000', {
 function App(props) {
   const [status, setStatus] = useState('No Connection')
   const [battery, setBattery] = useState(100)
-  let interval = null
   let prevCommand = ''
 
   const handleOnCommand = (command) => {
-    console.log(command)
+    console.log('Send: ' + command)
     socket.emit(command)
+    prevStatus = null
   }
 
   useEffect(() => {
-    if (interval) {
-      clearInterval(interval)
-    }
-    interval = setInterval(() => {
-      handleOnCommand('battery?')
-    }, 10000)
+    // if (interval) {
+    //   clearInterval(interval)
+    // }
+    // interval = setInterval(() => {
+    //   handleOnCommand('battery?')
+    // }, 3000)
   }, [])
 
   const isNumeric = (str) => {
@@ -52,7 +54,8 @@ function App(props) {
   })
 
   socket.on('message', (msg) => {
-    console.log(msg)
+    console.log('Received: ' + msg)
+    prevStatus = msg
     if (isNumeric(msg)) {
       setBattery(parseInt(msg))
     } else {
@@ -93,12 +96,21 @@ function App(props) {
       // console.log(result)
       label = result[0].label
       if (label !== 'idle') {
-        debounce_leading(() => {
-          if (prevCommand !== label) {
-            handleOnCommand(label)
-          }
-          prevCommand = label
-        }, 300)()
+        // debounce_leading(() => {
+        if (prevCommand !== label) {
+          // if (prevStatus == 'ok' || isNumeric(prevStatus)) {
+          handleOnCommand(label)
+          // } else {
+          //   if (interval) {
+          //     clearTimeout(interval)
+          //   }
+          //   interval = setTimeout(() => {
+          //     handleOnCommand('battery?')
+          //   }, 3000)
+          // }
+        }
+        prevCommand = label
+        // }, 300)()
       }
       classifier.classify(gotResults)
     }

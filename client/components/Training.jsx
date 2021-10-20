@@ -31,7 +31,7 @@ class Training extends React.Component {
   }
 
   trainAction = async (action) => {
-    for (const count of Array(15)) {
+    for (const count of Array(20)) {
       await this.sleep(1000)
       this.props.onAddAction(action)
     }

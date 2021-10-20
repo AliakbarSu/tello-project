@@ -15,10 +15,10 @@ export default [
     text: 'Up',
     action: 'up'
   },
-  // {
-  //   text: 'Down',
-  //   action: 'down'
-  // },
+  {
+    text: 'Down',
+    action: 'down'
+  },
   {
     text: 'Take Off',
     action: 'takeoff'

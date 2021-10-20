@@ -158,8 +158,16 @@ function App(props) {
   var prevCommand = '';
 
   var handleOnCommand = function handleOnCommand(command) {
-    console.log('Send: ' + command);
-    socket.emit(command);
+    var cmd = command;
+
+    if (cmd == 'left') {
+      cmd = 'back';
+    } else if (cmd == 'right') {
+      cmd = 'forward';
+    }
+
+    console.log('Send: ' + cmd);
+    socket.emit(cmd);
     prevStatus = null;
   };
 

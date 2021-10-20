@@ -162,7 +162,7 @@ function sendCommand(telloCommand) {
       break
 
     case 'forward':
-      dis = 100
+      dis = 50
       console.log('forward ' + dis)
       var message = new Buffer.from('forward ' + dis)
       client.send(
@@ -178,7 +178,7 @@ function sendCommand(telloCommand) {
       break
 
     case 'back':
-      dis = 100
+      dis = 50
       console.log('back ' + dis)
       var message = new Buffer.from('back ' + dis)
       client.send(

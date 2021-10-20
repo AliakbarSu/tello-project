@@ -29,18 +29,19 @@ function App(props) {
   let prevCommand = ''
 
   const handleOnCommand = (command) => {
-    console.log('Send: ' + command)
-    socket.emit(command)
+    let cmd = command
+    console.log('Send: ' + cmd)
+    socket.emit(cmd)
     prevStatus = null
   }
 
   useEffect(() => {
-    // if (interval) {
-    //   clearInterval(interval)
-    // }
-    // interval = setInterval(() => {
-    //   handleOnCommand('battery?')
-    // }, 3000)
+    if (interval) {
+      clearInterval(interval)
+    }
+    interval = setInterval(() => {
+      handleOnCommand('battery?')
+    }, 3000)
   }, [])
 
   const isNumeric = (str) => {

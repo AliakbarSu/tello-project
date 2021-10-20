@@ -6,7 +6,7 @@ This is an interactive interface that sends different commands (e.g move forward
 
 ## [Live Demo](https://www.youtube.com/watch?v=33dVx6BNDlk)
 
-![image of control panel](screenshots/control-panel.png)
+![image ali sultani controlling a drone via webcam](screenshots/control-panel.png)
 
 &nbsp;
 &nbsp;
